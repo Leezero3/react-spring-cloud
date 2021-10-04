@@ -11,13 +11,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 //@NoArgsConstructor // 디폴트 생성자(파라미터가 없는 생성자) 만듬
-// @AllArgsConstructor // 모든 생성자 만듬
+// @AllArgsConstructor // 모든 생성자 만듬..!
 @Entity // db 테이블 생성하겠다 (db프로그램에서 create table 명령어 안쓰고)
 @Data @Component @Table(name = "articles") // getset/ 캡슐화 / 테이블 이름을 준다
 public class Article {
     @Id //pk pk는 @notnull 없어도 기본적으로 낫널임
     @Column(name = "article_id") // 한 줄의 콜롬의 이름을 주고
-    @GeneratedValue // 시리얼 넘버같은 키를 줌
+    @GeneratedValue // 시리얼 넘버같은 키를 줌..!
     private long articleId;
 
     @NotNull @Column (length = 50)// 칸을 비워둘 수 없다(notnull) / 이름이 같으면 생략 가능
