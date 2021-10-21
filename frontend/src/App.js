@@ -14,12 +14,12 @@ export default function App() {
         <Switch>
           <Route exact path='/' component= { Home }/>
           <Redirect from='/home' to= { '/' }/>
-          <Route exact path='/user-add' component= { UserAdd }/>
-          <Route exact path='/user-detail' component= { UserDetail }/>
-          <Route exact path='/user-list' component= { UserList }/>
-          <Route exact path='/user-login' component= { UserLogin }/>
-          <Route exact path='/user-modify' component= { UserModify }/>
-          <Route exact path='/user-remove' component= { UserRemove }/>
+          <Route exact path='/users/add' component={UserAdd}/>
+          <Route exact path='/users/detail' component={UserDetail}/>
+          <Route exact path='/users/list' component={UserList}/>
+          <Route exact path='/users/login' component={UserLogin}/>
+          <Route exact path='/users/modify' component={UserModify}/>
+          <Route exact path='/users/remove' component={UserRemove}/>
         </Switch>
         
     </>

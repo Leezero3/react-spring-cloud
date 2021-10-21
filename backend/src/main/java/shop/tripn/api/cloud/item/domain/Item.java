@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Data @Component @Table(name = "items")
 public class Item {
-
-    @Id @Column(name = "item_id") @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @Column(name = "item_id")
     private long itemId;
 
     @NotNull @Column(name = "item_brand", length = 20)

@@ -1,4 +1,4 @@
-package shop.tripn.api.cloud;
+package shop.tripn.api.cloud.common;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
