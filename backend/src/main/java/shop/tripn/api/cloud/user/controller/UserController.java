@@ -32,10 +32,12 @@ public class UserController implements CommonController<User, Long> {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Optional<User>> login(@RequestBody UserDto user){
-        return new ResponseEntity<>(
-                userService.login(user.getUsername(), user.getPassword()),HttpStatus.OK);
-}
+    public ResponseEntity<User> login(@RequestBody UserDto user){
+        //        Optional<User> returnUser = userService.login(user.getUsername(), user.getPassword());
+        //        System.out.println("마리아DB에서 넘어온 정보 :" + returnUser.toString());
+        return ResponseEntity.ok(
+                userService.login(user.getUsername(), user.getPassword()).orElse(new User()));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable long id) {
@@ -52,8 +54,8 @@ public class UserController implements CommonController<User, Long> {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-
     @Override
+    @GetMapping()
     public ResponseEntity<List<User>> findAll() {
         return ResponseEntity.ok(userRepository.findAll());
     }
@@ -71,6 +73,13 @@ public class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok("SUCCESS");
     }
 
+    @PutMapping
+    public ResponseEntity<User> update(@RequestBody User user) {
+        logger.info(String.format("회원수정 정보: %s", user.toString()));
+        userRepository.save(user);
+        return ResponseEntity.ok(userRepository.getById(user.getUserId()));
+    }
+
     @Override
     public ResponseEntity<Optional<User>> findById(Long id) {
         return ResponseEntity.ok(userRepository.findById(id));
@@ -86,8 +95,9 @@ public class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userRepository.count());
     }
 
+    @DeleteMapping("/{id}")
     @Override
-    public ResponseEntity<String> deleteById(Long id) {
+    public ResponseEntity<String> deleteById(@PathVariable Long id) {
         userRepository.deleteById(id);
         return ResponseEntity.ok("SUCCESS");
     }
