@@ -1,6 +1,5 @@
 package shop.tripn.api.cloud.user.domain;
 
-
 import com.sun.istack.NotNull;
 import lombok.Data;
 import org.springframework.stereotype.Component;

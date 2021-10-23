@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Entity // db 테이블 생성하겠다 (db프로그램에서 create table 명령어 안쓰고)
 @Data @Component @Table(name = "articles") // getset/ 캡슐화 / 테이블 이름을 준다
 public class Article {
+
 //    @Id //pk pk는 @notnull 없어도 기본적으로 낫널임
 //    @Column(name = "article_id") // 한 줄의 콜롬의 이름을 주고
 //    @GeneratedValue(strategy = GenerationType.IDENTITY) // 시리얼 넘버같은 키를 줌
@@ -42,10 +43,10 @@ public class Article {
 //    @ManyToOne(fetch = FetchType.EAGER) // 내가 자식이다
 //    @JoinColumn(name = "item_id", insertable = false, updatable = false) // FK이기 때문에 이곳에서 업데이트나 삭제 불가능
 //    private Item item;
-@Id
-@Column(name = "article_id")
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private long articleId;
+    @Id
+    @Column(name = "article_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long articleId;
 
     @Column @NotNull private String title;
     @Column @NotNull private String content;
