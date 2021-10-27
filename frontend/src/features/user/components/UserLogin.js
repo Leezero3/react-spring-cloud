@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 
 export function UserLogin() {
 
-  const SERVER = 'http://localhost:8080'
   const [login, setLogin] = useState({})
   const {username, password} = login
   const history = useHistory()
@@ -16,9 +14,11 @@ export function UserLogin() {
       [name] : value
     })
   }
-  const headers = {
-    'Content-type' : 'application/json',
-    'Authorization' : 'JWT fefege..' // 일종의 토큰 블라블라로 바꿔준다
+
+  const changeNull = ls =>{
+    for(const i of ls ){
+      document.getElementById(i).value = ''
+    }
   }
 
   const handleClick = e => {
@@ -45,8 +45,7 @@ export function UserLogin() {
     })
 
   }
-  const userLogin = loginRequest => 
-    axios.post(`${SERVER}/users/login`, JSON.stringify(loginRequest), {headers})
+  
 
   return (
     <form method="POST">
