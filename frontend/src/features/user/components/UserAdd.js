@@ -5,9 +5,9 @@ import { joinPage } from '../reducer/userSlice';
 
 export default function UserAdd() {
     const history = useHistory()
-    const Dispatch = useDispatch
+    const dispatch = useDispatch()
     const [join, setJoin] = useState({
-        username: '', password: '', email:'', name:'', regDate: new Date().toLocaleTimeString()
+        username: '', password: '', email:'', name:'', regDate: new Date().toLocaleDateString()
     })
 
     const {username, password, email, name} = join
@@ -22,18 +22,31 @@ export default function UserAdd() {
     )
     
    
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const joinRequest = {...join}
-        alert(`회원가입정보: ${JSON.stringify(joinRequest)}`)
-        userJoin(joinRequest)
-        .then(res =>{
-            alert('회원가입 성공')
-            history.push('/users/login')
-        })
-        .catch(err => {
-            alert(`회원가입 실패 : ${err}`)
-        })
+        e.stopPropagation()
+        const json = {
+            'username': join.username,
+            'password': join.password,
+            'email': join.email,
+            'name': join.name,
+            'regDate': join.regDate
+        }
+        alert(`회원가입 정보: ${JSON.stringify(json)}`)
+        await dispatch(joinPage(json))
+        alert(`${join.username} 회원가입 환영`)
+        history.push('/users/login')
+
+        // const joinRequest = {...join}
+        // alert(`회원가입정보: ${JSON.stringify(joinRequest)}`)
+        // userJoin(joinRequest)
+        // .then(res =>{
+        //     alert('회원가입 성공')
+        //     history.push('/users/login')
+        // })
+        // .catch(err => {
+        //     alert(`회원가입 실패 : ${err}`)
+        // })
     }
 
 
@@ -65,7 +78,7 @@ export default function UserAdd() {
                   </label>
               </li>
               <li>
-                  <input type="submit" value="회원가입"/>
+                <input type="submit" onClick={ e => handleSubmit(e)} value="회원가입"/>
               </li>
 
           </ul>

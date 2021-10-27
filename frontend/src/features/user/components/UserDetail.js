@@ -9,9 +9,9 @@ export function UserDetail() {
       userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
   })
   
-  const fetchOne = () => {
+  const UserDetail = () => {
       const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
-      userFetchOne()
+      UserDetail()
       .then(res => {
           setDetail(res.data)
       })
@@ -20,7 +20,7 @@ export function UserDetail() {
       })
   }
   useEffect(() => {
-      fetchOne()
+    UserDetail()
   }, [])
   
   const logout = e => {

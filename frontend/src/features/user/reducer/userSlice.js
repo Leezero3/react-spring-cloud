@@ -2,26 +2,27 @@ import { userAPI } from ".."
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 
-const userJoinPage = async(x) => {
+const userJoinPage = async (x) => {
     const res = await userAPI.userJoin(x)
     return res.data
 }
-const userDetailPage  = async(x) => {
+const userDetailPage  = async (x) => {
     const res = await userAPI.userDetail(x)
     return res.data
 }
-const userListPage = async(x) => {
+const userListPage = async (x) => {
     const res = await userAPI.userList()
+    return res.data
 }
-const userLoginPage = async(x) => {
+const userLoginPage = async (x) => {
     const res = await userAPI.userLogin(x)
     return res.data
 }
-const userModifyPage = async(x) => {
+const userModifyPage = async (x) => {
     const res = await userAPI.userModify(x)
     return res.data
 }
-const userRemovePage = async(x) => {
+const userRemovePage = async (x) => {
     const res = await userAPI.userRemove(x)
     return res.data
 }
@@ -34,30 +35,31 @@ export const modifiyPage = createAsyncThunk('users/modify', userModifyPage)
 export const removePage = createAsyncThunk('users/remove', userRemovePage)
 
 const userSlice = createSlice({
-    name : users,
+    name : 'users',
     initialState: {
-        userState: {},
+        userState: {
+            username:'', password:'', email:'', name:'', regDate: ''
+        },
         type: '',
         keyword: '',
         params: {}
     },
     reducers: {},
     extraReducers: {
-        [joinPage.fulfilled]: ( state, action ) => { state.userState = action.payload },
-
-        [detailPage.fulfilled]: ( state, {meta,payload} ) => { state.userState = payload },
-        [listPage.fulfilled]: ( state, {meta,payload} ) => { state.userState = payload },
-        
-        
-        [loginPage.fulfilled]: (state, {meta,payload}) => {
+        [joinPage.fulfilled]: ( state, action ) => { 
+            state.userState = action.payload 
+        },
+        [detailPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
+        [listPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload },
+        [loginPage.fulfilled]: (state, {meta, payload}) => {
             state.userState = payload
             window.localStorage.setItem('sessionUser', JSON.stringify(payload)) // window 전역
         },
         [modifiyPage.fulfilled]: ( state, action ) => { 
             state.userState = action.payload
-            window.localStorage.setItem('sessionUser', JSON.stringify(payload))
+            window.localStorage.setItem('sessionUser', JSON.stringify(action.payload))
         },
-        [removePage.fulfilled]: ( state, {meta,payload} ) => { 
+        [removePage.fulfilled]: ( state, {meta, payload} ) => { 
             state.userState = payload
             window.localStorage.setItem('sessionUser', '')
         },
