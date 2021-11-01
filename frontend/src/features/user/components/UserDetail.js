@@ -1,34 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
 export function UserDetail() {
-
-  const history = useHistory()
-  const [detail, setDetail] = useState({
-      userId:'', username:'', password:'', email:'', name:'', regDate: new Date().toLocaleDateString()
-  })
-  
-  const UserDetail = () => {
-      const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
-      UserDetail()
-      .then(res => {
-          setDetail(res.data)
-      })
-      .catch(err => {
-          alert(`${err}`)
-      })
-  }
-  useEffect(() => {
-    UserDetail()
-  }, [])
-  
-  const logout = e => {
-    e.preventDefault()
-    localStorage.setItem('sessionUser','')
-    history.push('/')
-}
-
+  const sessionUser = JSON.parse(localStorage.getItem('sessionUser'))
+  const dispatch = useDispatch()
+  const history = useHistory
 
 return (
   <div>
@@ -66,9 +44,9 @@ return (
         <li>
               <input type="button" value="회원정보수정" onClick={()=> history.push('/users/modify')}/>
         </li>
-        <li>
-                <input type="button" value="로그아웃" onClick={logout}/>
-        </li>
+        {/* <li>
+                <input type="button" value="로그아웃" onClick={dispatch(logout())}/>
+        </li> */}
 
       </ul>
  

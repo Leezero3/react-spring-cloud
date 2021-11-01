@@ -9,7 +9,7 @@ import userReducer from 'features/user/reducer/userSlice';
 
 const rootReducer = combineReducers({ userReducer })
 
-export const store = configureStore({
+export const store = configureStore({ // 
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
