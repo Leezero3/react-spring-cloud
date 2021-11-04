@@ -3,7 +3,6 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.tripn.api.cloud.common.CommonController;
@@ -11,8 +10,6 @@ import shop.tripn.api.cloud.user.domain.User;
 import shop.tripn.api.cloud.user.domain.UserDto;
 import shop.tripn.api.cloud.user.repository.UserRepository;
 import shop.tripn.api.cloud.user.service.UserService;
-
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +28,6 @@ public class UserController implements CommonController<User, Long> {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 
-
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody UserDto user){
         //        Optional<User> returnUser = userService.login(user.getUsername(), user.getPassword());
@@ -40,24 +36,29 @@ public class UserController implements CommonController<User, Long> {
                 userService.login(user.getUsername(), user.getPassword()).orElse(new User()));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable long id) {
-        System.out.println("--------");
-        User user = userService.findById(id).get();
-        UserDto userDto = UserDto.builder()
-                .userId(user.getUserId())
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .name(user.getName())
-                .email(user.getEmail())
-                .regDate(user.getRegDate())
-                .build();
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UserDto> getById(@PathVariable long id) {
+//        System.out.println("--------");
+//        User user = userService.findById(id).get();
+//        UserDto userDto = UserDto.builder()
+//                .userId(user.getUserId())
+//                .username(user.getUsername())
+//                .password(user.getPassword())
+//                .name(user.getName())
+//                .email(user.getEmail())
+//                .regDate(user.getRegDate())
+//                .build();
+//        return new ResponseEntity<>(userDto, HttpStatus.OK);
+//    }
 
     @Override
-    @GetMapping()
     public ResponseEntity<List<User>> findAll() {
+        return null;
+    }
+
+    @GetMapping("/list/{page}")
+    public ResponseEntity<List<User>> getList(@PathVariable int page) {
+//        System.out.println("::::::: PageNumber :::::::: "+page);
         return ResponseEntity.ok(userRepository.findAll());
     }
 
@@ -86,9 +87,22 @@ public class UserController implements CommonController<User, Long> {
         return ResponseEntity.ok(userRepository.findById(id));
     }
 
-    @Override
-    public ResponseEntity<Boolean> existsById(Long id) {
-        return ResponseEntity.ok(userRepository.existsById(id));
+//    @Override
+//    public ResponseEntity<Boolean> existsById(Long id) {
+//        return ResponseEntity.ok(userRepository.existsById(id));
+//    }
+
+    @GetMapping("/existsById/{id}")
+    public ResponseEntity<Boolean> existsById(@PathVariable Long id) {
+        System.out.println(" id " + id);
+        boolean b = userRepository.existsById(id);
+        System.out.println(" Exist : "+b);
+        return ResponseEntity.ok(b);
+    }
+
+    @GetMapping("/exist/{username}")
+    public ResponseEntity<Boolean> exist(@PathVariable String username) {
+        return ResponseEntity.ok(userRepository.existsByUsername(username));
     }
 
     @Override

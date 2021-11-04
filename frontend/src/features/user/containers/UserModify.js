@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+// 라이브러리를 쓰지 않은 스탠다드 형식
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory  } from 'react-router-dom';
 
+import Layout from 'features/common/components/Layout';
+import styled from 'styled-components'
+import { modify } from '../reducer/userSlice';
+
+
 export function UserModify() {
-    const history = useHistory({})
-    
+    const dispatch = useDispatch()
+    const history = useHistory()
     const sessionUser = JSON.parse(localStorage.getItem('sessionUser')); 
-    const [modify, setModify] = useState({
+    const [param, setParam] = useState({
         userId: sessionUser.userId,
         username:sessionUser.username, 
         password:sessionUser.password, 
@@ -13,36 +20,25 @@ export function UserModify() {
         name:sessionUser.name, 
         regDate: sessionUser.regDate
     })
-    const {userId, username, password, email, name} = modify
+    const {userId, username, password, email, name} = param
     const handleChange = e => {
         const { value, name } = e.target
-        setModify({
-            ...modify,
+        setParam({
+            ...param,
             [name] : value
         })
     }
 
-   
-    const handleSubmit = e => {
-        e.preventDefault()
-        const modifyRequest = {...modify}
-        alert(`회원수정 정보: ${JSON.stringify(modifyRequest)}`)
-        UserModify(modifyRequest)
-        .then(res =>{
-            alert('회원 정보 수정 성공')
-            localStorage.setItem('sessionUser', JSON.stringify(res.data))
-            history.push("/users/detail")
-        })
-        .catch(err =>{
-            alert(`회원수정 실패 : ${err}`)
-        })
-
-  }
-
   return (
-    <div>
+    <Layout>
+    <Main>
          <h1>회원정보 수정</h1>
-    <form onSubmit={handleSubmit} method='PUT'>
+    <form method='PUT' onSubmit={useCallback ( 
+                e => {
+                e.preventDefault()
+                dispatch(modify({...param}))
+            })
+    }>
         <ul>
             <li>
               <label>
@@ -79,9 +75,16 @@ export function UserModify() {
             <li>
                 <input type="submit" value="수정확인"/>
             </li>
-
         </ul>
     </form>
-    </div>
+    </Main>
+    </Layout>
   );
 }
+
+const Main = styled.div`
+width: 500px;
+margin: 0 auto;
+text-decoration:none
+text-align: center;
+` 
