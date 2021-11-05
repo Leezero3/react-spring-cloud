@@ -71,6 +71,10 @@ const userSlice = createSlice({
         [list.fulfilled]: ( state, {meta, payload} ) => { 
             state.usersState = payload },
 
+
+
+
+            
         [login.fulfilled]: (state, {meta, payload}) => {
             state.userState = payload
             window.localStorage.setItem('sessionUser', JSON.stringify(payload)) // window 전역
