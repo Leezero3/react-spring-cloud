@@ -60,6 +60,8 @@ const userSlice = createSlice({
             state.userState = action.payload // 전체 리덕스 즉 스토어에서.userState 
             window.location.href = `/users/login`
         },
+
+        
         // [detailPage.fulfilled]: ( state, {meta, payload} ) => { state.userState = payload }, 
         // [listPage.fulfilled]: ( state, {meta, payload} ) => {
         //      state.userState = payload },
